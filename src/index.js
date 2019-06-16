@@ -4,7 +4,7 @@ import useAbsorption from './useAbsorption';
 import useRefection from './useRefection';
 
 function App() {
-  const test = {
+  const baseState = {
     product1: {
       id: 'product1',
       color: 'red',
@@ -28,28 +28,29 @@ function App() {
   };
 
   const _account = useAbsorption({
-    state: test,
+    baseState: baseState,
     absorbs: ['product1.account', 'product2.account', 'product3.account'],
   });
 
+  //dont like this part very much..
   const [account, setAccount] = useState(_account);
 
-  const aanvraag = useRefection({
-    state: account,
-    lala: test,
+  const reflectedState = useRefection({
+    absorbedState: account,
+    baseState: baseState,
     reflections: ['product1.account', 'product2.account', 'product3.account'],
   });
 
   useEffect(() => {
-    setTimeout(() => {
-      setAccount({ ..._account, accountNumber: 'hellow' });
-    }, 3000);
+    // setTimeout(() => {
+    setAccount({ ..._account, accountNumber: 'hellow' });
+    // }, 3000);
   }, [_account]);
 
   return (
     <div className="App">
       <h3>base obj</h3>
-      <pre>{JSON.stringify(test, null, 2)}</pre>
+      <pre>{JSON.stringify(baseState, null, 2)}</pre>
       <hr />
 
       <h3>absorped obj</h3>
@@ -61,7 +62,7 @@ function App() {
       <hr />
 
       <h3>reflected obj</h3>
-      <pre>{JSON.stringify(aanvraag, null, 2)}</pre>
+      <pre>{JSON.stringify(reflectedState, null, 2)}</pre>
       <hr />
 
       <input

@@ -6,19 +6,19 @@ const allEqual = arr =>
     return JSON.stringify(v) === JSON.stringify(arr[0]);
   });
 
-const getToAbsorbState = ({ state, list }) => {
-  const paths = list.map(item => getPath(state, item)).filter(item => item);
+const getToAbsorbState = ({ baseState, list }) => {
+  const paths = list.map(item => getPath(baseState, item)).filter(item => item);
   if (allEqual(paths)) {
     return paths[0];
   }
   return null;
 };
 
-function useAbsorption({ state = {}, absorbs }) {
+function useAbsorption({ baseState = {}, absorbs }) {
   const [isAbsorbed, setAbsorbed] = useState(null);
 
   useEffect(() => {
-    setAbsorbed(getToAbsorbState({ state, list: absorbs }));
+    setAbsorbed(getToAbsorbState({ baseState, list: absorbs }));
   }, []);
 
   return isAbsorbed;

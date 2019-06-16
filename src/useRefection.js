@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { setPath } from './pathService';
 
-const getToRefection = ({ state, lala, list }) => {
-  list.forEach(function(item) { 
-    setPath(lala, item, state)
+const getToRefection = ({ absorbedState, baseState, list }) => {
+  list.forEach(function(item) {
+    setPath(baseState, item, absorbedState);
   });
-  return lala
+  return baseState;
 };
 
-function useRefection({ state = {}, lala = {}, reflections }) {
-  const [isRefect, setRefect] = useState(state);
+function useRefection({ absorbedState = {}, baseState = {}, reflections }) {
+  const [isRefect, setRefect] = useState(absorbedState);
 
   useEffect(() => {
-    setRefect(getToRefection({ state, lala, list: reflections }));
-  }, [state]);
+    setRefect(getToRefection({ absorbedState, baseState, list: reflections }));
+  }, [absorbedState]);
 
   return isRefect;
 }
